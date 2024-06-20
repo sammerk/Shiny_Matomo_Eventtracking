@@ -8,8 +8,25 @@
       src="./shinylive/load-shinylive-sw.js"
       type="module"
     ></script>
+
     
-<!-- Matomo -->
+    
+    <script type="module">
+      import { runApp } from "./shinylive/shinylive.js";
+      const response = await fetch("./app.json");
+      if (!response.ok) {
+        throw new Error("HTTP error loading app.json: " + response.status);
+      }
+      const appFiles = await response.json();
+
+      const appRoot = document.getElementById("root");
+      runApp(appRoot, "viewer", {startFiles: appFiles}, "r");
+    </script>
+    <link rel="stylesheet" href="./shinylive/style-resets.css" />
+    <link rel="stylesheet" href="./shinylive/shinylive.css" />
+  </head>
+  <body>
+    <!-- Matomo -->
 <script>
   var _paq = window._paq = window._paq || [];
   /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
@@ -32,23 +49,6 @@
            'updates', event.name, event.value]);
        }
      });</script>
-    
-    
-    <script type="module">
-      import { runApp } from "./shinylive/shinylive.js";
-      const response = await fetch("./app.json");
-      if (!response.ok) {
-        throw new Error("HTTP error loading app.json: " + response.status);
-      }
-      const appFiles = await response.json();
-
-      const appRoot = document.getElementById("root");
-      runApp(appRoot, "viewer", {startFiles: appFiles}, "r");
-    </script>
-    <link rel="stylesheet" href="./shinylive/style-resets.css" />
-    <link rel="stylesheet" href="./shinylive/shinylive.css" />
-  </head>
-  <body>
     <div style="height: 100vh; width: 100vw" id="root"></div>
   </body>
 </html>
